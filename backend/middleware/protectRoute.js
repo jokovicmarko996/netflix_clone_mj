@@ -4,6 +4,7 @@ import { ENV_VARS } from "../config/envVars.js";
 
 export const protectRoute = async (req, res, next) => {
   try {
+    // proveri da li je korisnik autentifikovan (ako nije, vrati gresku 401) [proveris validnost tokena]
     const token = req.cookies["jwt-netflix"];
 
     if (!token) {
@@ -12,6 +13,7 @@ export const protectRoute = async (req, res, next) => {
         .json({ success: false, message: "Unauthorized - No Token Provided" });
     }
 
+    // proveri da li je token validan (ako si unauthorized vrati gresku 401)
     const decoded = jwt.verify(token, ENV_VARS.JWT_SECRET);
 
     if (!decoded) {
@@ -30,7 +32,7 @@ export const protectRoute = async (req, res, next) => {
         .json({ success: false, message: "User not found" });
     }
 
-		// Attach the user to the request object for further use in the route handlers
+    // Attach the user to the request object for further use in the route handlers
     req.user = user;
 
     next(); // sve ok, prosledi zahtev dalje na sledeci middleware

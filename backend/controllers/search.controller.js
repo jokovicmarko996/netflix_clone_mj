@@ -13,6 +13,7 @@ export async function searchPerson(req, res) {
     }
 
     await User.findByIdAndUpdate(req.user._id, {
+      // dopuni search history korisnika koji je ulogovan sa trazenim glumcima
       $push: {
         searchHistory: {
           id: response.results[0].id,
@@ -43,6 +44,7 @@ export async function searchMovie(req, res) {
       return res.status(404).send(null);
     }
 
+    // dopuni search history korisnika koji je ulogovan sa trazenim filmom
     await User.findByIdAndUpdate(req.user._id, {
       $push: {
         searchHistory: {
@@ -73,6 +75,7 @@ export async function searchTv(req, res) {
       return res.status(404).send(null);
     }
 
+    // dopuni search history korisnika koji je ulogovan sa trazenim tv serijalom
     await User.findByIdAndUpdate(req.user._id, {
       $push: {
         searchHistory: {

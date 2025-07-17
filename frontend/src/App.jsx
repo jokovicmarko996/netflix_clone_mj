@@ -19,6 +19,8 @@ function App() {
 		authCheck();
 	}, [authCheck]);
 
+	// If the authentication check is still in progress, show a loading spinner
+	// This prevents the app from rendering before we know if the user is authenticated
 	if (isCheckingAuth) {
 		return (
 			<div className='h-screen'>
